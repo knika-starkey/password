@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="wrap">
+      <a target="_blank" href="https://example.com/">dfdfd</a>
+      <a href="/list">dfdf</a>
+      <a href="https://example.com/">aaa</a>
+      <a target="_self" href="https://example.com/">aaaa</a>
+    </div>
+    <script>
+      let newLinks = [];
+      //   let url = "https://example.com/";
+      //   let a = `<a target="_blank" href="https://example.com/">dfdfd</a>`;
+      let divL = document.getElementById("wrap");
+      let text = divL.innerHTML.split("\n");
+      for (let i = 0; i < text.length; i++) {
+        text[i] = text[i].trim();
+        if (text[i] != "") {
+          newLinks.push(changeLink(text[i]));
+        }
+      }
+      divL.innerHTML = newLinks.join("\n");
+      //   console.log(document.getElementById("wrap").innerHTML);
+
+      function changeLink(url) {
+        // let reg = /https?:\/\/[^"]+/gi;
+        // console.log(url.match(reg));
+        // console.log(reg.test(url));
+        let targetReg = /target\s?="[^"]+"/gi;
+        // console.log(url.match(targetReg));
+        // console.log(targetReg.test(url));
+        url = url.replace(targetReg, "").replace(/\s\s/, " ");
+        // console.log(url);
+        let newReg = /(<a)\s*(href=\"http)/g;
+        url = url.replace(newReg, `$1 target="_blank" $2`);
+        console.log(url);
+        return url;
+      }
+    </script>
+  </body>
+</html>
